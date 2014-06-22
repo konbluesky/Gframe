@@ -30,7 +30,8 @@
   
   <modules>
       <!-- <module>gframe-core</module> -->
-    <module>gframe-core</module>
+      <module>gframe-core</module>
+      <module>gframe-spider</module>
   </modules>
   
   <dependencies>

@@ -32,6 +32,7 @@ public class HexunProcessor implements PageProcessor {
         // 部分三：从页面发现后续的url地址来≤抓取
         //http://money\.hexun\.com/\w+/\w+.html
         page.addTargetRequests(page.getHtml().links().regex("(http://money\\.hexun\\.com/\\d{4}-\\d{2}-\\d{2}/\\d+.html)").all());
+
     }
 
     @Override

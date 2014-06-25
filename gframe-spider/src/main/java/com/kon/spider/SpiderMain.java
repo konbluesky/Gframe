@@ -3,7 +3,6 @@ package com.kon.spider;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.kon.spider.model.HexunModel;
-import com.kon.spider.model.SpiderRecord;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
@@ -17,8 +16,6 @@ public class SpiderMain {
         c3p0Plugin.start();
         ActiveRecordPlugin activeRecordPlugin = new ActiveRecordPlugin(c3p0Plugin);
         activeRecordPlugin.addMapping("news_normal", HexunModel.class);
-        activeRecordPlugin.addMapping("spider_recoder", SpiderRecord.class);
-
         activeRecordPlugin.start();
         //启动webmagic
 

@@ -40,31 +40,38 @@ public class HexunModel extends Model<HexunModel> implements AfterExtractor {
     @ExtractBy(value = "//*[@id=\"pubtime_baidu\"]/text()", type = ExtractBy.Type.XPath,notNull = true)
     public String ndate;
 
-//    $("#artibodyDesc a")
     @ExtractBy(value="//*[@id=\"source_baidu\"]/a/text()", type = ExtractBy.Type.XPath,notNull = true)
     public String source;
 
+    /**
+     * 过滤方法
+     */
+    public void filter(){
+        //过滤内容中的<http://*****>
+        content=content.replaceAll("<.*?>", "");
+    }
     @Override
     public void afterProcess(Page page) {
         String stype=page.getUrl().regex("http://(\\w+).hexun.com").toString();
-//        if(HeXunDomainMap.getCodemap().get(""))
         if(stype==null || stype.length()==0) return;
 
         String code=HeXunDomainMap.getCodemap().get(stype);
-
         if(code ==null || code.length()==0) return;
-
+        //过滤内容中的url
+        filter();
+        this.set("newid",originid);
         this.set("ntype",code);
         this.set("newstitle",newstitle);
         this.set("pdate",pdate);
         this.set("createdate",ndate);
         this.set("source",source);
         this.set("content",content);
-        this.set("summary",content.length()>40?content.substring(40):content);
+        this.set("summary",content.length()>40?content.substring(0,50):content);
         this.set("editor","peopleim");
         this.set("liveflag",1);
         this.save();
 
+        //保存到爬取记录中
         Record spider_recoder=new Record();
         spider_recoder.set("localid",this.get("id"));
         spider_recoder.set("ntype",code);

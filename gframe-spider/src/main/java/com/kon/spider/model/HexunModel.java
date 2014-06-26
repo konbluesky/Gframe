@@ -25,6 +25,7 @@ import java.util.Date;
 @TargetUrl("http://\\w+.hexun.com/\\d{4}-\\d{2}-\\d{2}/(\\d+).html")
 @HelpUrl("http://www.hexun.com/")
 public class HexunModel extends Model<HexunModel> implements AfterExtractor {
+    public static HexunModel dao=new HexunModel();
     @ExtractBy(value = "//*[@id=\"artibodyTitle\"]/h1/text()", type = ExtractBy.Type.XPath,notNull = true)
     public String newstitle;
 

@@ -55,6 +55,11 @@ public class HexunDayModel extends Model<HexunDayModel> implements AfterExtracto
     @ExtractBy(value="//*[@id=\"source_baidu\"]/a/text()", type = ExtractBy.Type.XPath,notNull = true)
     public String source;
 
+    @ExtractBy(value="name=\"keywords\" content=\"(.*?)\"",type = ExtractBy.Type.Regex,notNull = true)
+    public String meta_keyword;
+
+    @ExtractBy(value="name=\"description\" content=\"(.*?)\"",type = ExtractBy.Type.Regex,notNull = true)
+    public String meta_description;
     /**
      * 过滤方法
      */
@@ -85,6 +90,7 @@ public class HexunDayModel extends Model<HexunDayModel> implements AfterExtracto
         this.set("summary",content.length()>40?content.substring(0,50):content);
         this.set("editor","peopleim");
         this.set("liveflag",1);
+        this.set("isspider",1);
         this.save();
 
         //保存到爬取记录中
@@ -100,7 +106,8 @@ public class HexunDayModel extends Model<HexunDayModel> implements AfterExtracto
     }
 
     public static void main(String[] args) {
-        C3p0Plugin c3p0Plugin = new C3p0Plugin("jdbc:mysql://127.0.0.1/jiren?characterEncoding=utf-8", "root", "root");
+//        C3p0Plugin c3p0Plugin = new C3p0Plugin("jdbc:mysql://127.0.0.1/jiren?characterEncoding=utf-8", "root", "root");
+        C3p0Plugin c3p0Plugin = new C3p0Plugin("jdbc:mysql://210.209.73.47/jiren?characterEncoding=utf-8", "root", "gongwei911");
         c3p0Plugin.start();
         ActiveRecordPlugin activeRecordPlugin = new ActiveRecordPlugin(c3p0Plugin);
         activeRecordPlugin.addMapping("news_normal", HexunDayModel.class);
